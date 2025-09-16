@@ -30,13 +30,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         _result = '';
       } else if (value == '=') {
         try {
-          final exp = Expression.parse(_expression.replaceAll('×', '*').replaceAll('÷', '/'));
+          final exp = Expression.parse(
+            _expression.replaceAll('×', '*').replaceAll('÷', '/')
+          );
           final evaluator = const ExpressionEvaluator();
           final evalResult = evaluator.eval(exp, {});
           _result = '= $evalResult';
         } catch (e) {
           _result = '= Error';
         }
+      } else if (value == 'x²') {
+        _expression += '^2';
       } else {
         _expression += value;
       }
@@ -86,6 +90,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           Expanded(
             child: Column(
               children: [
+                _buildButtonRow(['x²', '%'], color: Colors.blue[100]),
                 _buildButtonRow(['7', '8', '9', '÷']),
                 _buildButtonRow(['4', '5', '6', '×']),
                 _buildButtonRow(['1', '2', '3', '-']),
